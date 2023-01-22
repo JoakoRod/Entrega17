@@ -28,7 +28,7 @@ export const puerto = args.port;
 
 async function init() {
 
-  initKnex();
+  //initKnex();
   await initMongoDB();
 
 
