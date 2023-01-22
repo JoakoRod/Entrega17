@@ -29,7 +29,7 @@ const optionalArgsObject = {
     },
     default: {
         //Si no nos envian el argumento, se setea por default
-        port: '8080',
+        port: process.env.PORT || '8080',
         cluster: false,
     },
 };
@@ -37,7 +37,7 @@ const args = (0, minimist_1.default)(process.argv, optionalArgsObject);
 exports.puerto = args.port;
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
-        (0, database_1.initKnex)();
+        //initKnex();
         yield (0, database_1.initMongoDB)();
         const httpServer = server_1.default.listen(exports.puerto, () => console.log('Server up en puerto', exports.puerto));
         httpServer.on('error', (err) => console.log('ERROR (posiblemente puerto ocupado)', err));

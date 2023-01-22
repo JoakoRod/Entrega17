@@ -1,5 +1,5 @@
 import server from './services/server';
-import { initMongoDB, initKnex } from './services/database';
+import { initMongoDB, /* initKnex */ } from './services/database';
 import minimist from 'minimist';
 import cluster from 'cluster';
 import os from 'os';

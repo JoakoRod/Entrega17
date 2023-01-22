@@ -1,10 +1,10 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import * as productosController from '../../controllers/knex';
 import { getAllNormal } from '../../controllers/mensajes';
 import createError from 'http-errors';
 import passport from 'passport';
 import { isLoggedInPage } from '../../middlewares/auth';
 import { logger } from '../../services/logger';
+import { Iproductos, productosModel } from '../../models/productos';
 
 const router = Router();
 
@@ -63,7 +63,7 @@ router.get('/', isLoggedInPage, async (req: Request | any, res: Response, next: 
     logger.info('GET /');
     try {
         const datos = {
-            productos: await productosController.getKnex(tableName),
+            productos: await productosModel.find().lean(),
             mostrar: true,
             ruta: '/',
             mensajes: await getAllNormal(),
@@ -85,7 +85,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     logger.info('POST /');
     try {
         const producto = req.body;
-        await productosController.createKnex(tableName, producto);
+        await productosModel.create(producto);
 
         res.redirect('/')
 

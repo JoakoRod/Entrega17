@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
-import knex from 'knex';
 import config from '../config/index';
+//import knex from 'knex';
+
 
 mongoose.set('strictQuery', true);
 
@@ -16,7 +17,7 @@ export async function initMongoDB() {
     }
 }
 
-
+/* 
 export const connectionProducts = knex(config.SQL_CONNECTION);
 
 export function initKnex() {
@@ -34,5 +35,5 @@ export function initKnex() {
             productosTable.bigInteger('stock').notNullable();
         });
     });
-};
+}; */
 

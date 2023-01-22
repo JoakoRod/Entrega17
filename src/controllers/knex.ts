@@ -1,11 +1,11 @@
-import { connectionProducts } from '../services/database';
-/* import { IProductos } from '../../models/productos'
+/*import { connectionProducts } from '../services/database';
+import { IProductos } from '../../models/productos'
 
-function comprobarProducto(producto: IProductos) {
-    if (typeof product.price == 'string') product.price = parseFloat(product.price);
-    if (!product.title || !product.price || !product.thumbnail || typeof product.title !== 'string' ||
-        typeof product.price !== 'number' || typeof product.thumbnail !== 'string') throw createError(400, 'Datos invalidos');
-} */
+//function comprobarProducto(producto: IProductos) {
+//    if (typeof product.price == 'string') product.price = parseFloat(product.price);
+//    if (!product.title || !product.price || !product.thumbnail || typeof product.title !== 'string' ||
+//        typeof product.price !== 'number' || typeof product.thumbnail !== 'string') throw createError(400, 'Datos invalidos');
+//}
 
 export function getKnex(tableName: string, id?: String | Number) {
     if (tableName == 'productos') {
@@ -30,4 +30,4 @@ export function deleteKnex(tableName: string, id?: String | Number) {
     if (tableName == 'productos') {
         return connectionProducts(tableName).where('id', id).del();
     }
-};
+};*/

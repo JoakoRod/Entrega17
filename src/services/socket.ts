@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { createKnex } from '../controllers/knex';
+import { productosModel } from '../models/productos';
 import http from 'http';
 import { save } from "../controllers/mensajes";
 import moment from "moment";
@@ -14,7 +14,7 @@ export function initWsServer(server: http.Server) {
 
     socket.on('seAgregoProducto', async (producto) => {
       console.log('se carga un producto');
-      await createKnex('productos', producto);
+      await productosModel.create(producto);
       socket.broadcast.emit('agregarProducto', (producto));
     });
 

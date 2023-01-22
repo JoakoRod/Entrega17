@@ -1,16 +1,14 @@
-import { createKnex, deleteKnex, getKnex, updateKnex } from '../../controllers/knex';
+import { Iproductos, productosModel } from '../../models/productos';
 import { isAdmin } from '../../middlewares/auth';
 import { Router, Request, Response, NextFunction } from 'express';
 import { logger } from '../../services/logger';
 
 const router = Router();
 
-const tableName = 'productos';
-
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     logger.info('GET /api/productos/');
     try {
-        const data = await getKnex(tableName);
+        const data: Iproductos[] = await productosModel.find().lean();
         data?.length != 0 ? res.json(data) : res.json({ msg: 'No se encontraron productos' })
     } catch (error) {
         next(error);
@@ -21,8 +19,8 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
     logger.info('GET /api/productos/:id');
     try {
         const id = req.params.id
-        const data = await getKnex(tableName, id);
-        data?.length != 0 ? res.json(data) : res.json({ msg: 'No se encontro ningun producto con el id ingresado' })
+        const data: Iproductos | null = await productosModel.findById(id)
+        data ? res.json(data) : res.json({ msg: 'No se encontro ningun producto con el id ingresado' })
 
     } catch (error) {
         next(error);
@@ -33,7 +31,7 @@ router.post('/', isAdmin, async (req: Request, res: Response, next: NextFunction
     logger.info('POST /api/productos/');
     try {
         const product = req.body;
-        await createKnex(tableName, product);
+        await productosModel.create(product);
         res.json({ msg: 'ok' });
 
     } catch (error) {
@@ -47,7 +45,7 @@ router.put('/:id', isAdmin, async (req: Request, res: Response, next: NextFuncti
         const id = req.params.id;
         const product = req.body;
 
-        await updateKnex(tableName, product, id);
+        await productosModel.findOneAndUpdate({ _id: id }, product);
         res.json({ msg: 'ok' });
 
     } catch (error) {
@@ -60,7 +58,7 @@ router.delete('/:id', isAdmin, async (req: Request, res: Response, next: NextFun
     logger.info('DELETE /api/productos/:id');
     try {
         const id = req.params.id;
-        await deleteKnex(tableName, id);
+        await productosModel.deleteOne({ _id: id });
         res.json({ msg: 'ok' });
     } catch (error) {
         next(error);

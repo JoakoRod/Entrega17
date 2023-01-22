@@ -6,7 +6,7 @@ dotenv.config({
 
 export default {
     MONGO_ATLAS_URL: process.env.mongo_atlas || 'mongoSRV',
-    SQL_CONNECTION: {
+    /* SQL_CONNECTION: {
         client: 'mysql2',
         connection: {
             host: '127.0.0.1',
@@ -15,7 +15,7 @@ export default {
             password: '',
             database: 'backend',
         },
-    },
+    }, */
     secret: process.env.secret || 'asd123',
     secret2: process.env.secret2 || 'fgh456' 
 };
