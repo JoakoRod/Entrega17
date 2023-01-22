@@ -14,6 +14,8 @@ const isLoggedInPage = (req, res, done) => {
 };
 exports.isLoggedInPage = isLoggedInPage;
 const isAdmin = (req, res, done) => {
+    if (!req.isAuthenticated())
+        return res.status(401).json({ msg: 'Unathorized' });
     if (req.user.role != 'admin')
         return res.status(401).json({ msg: 'Unathorized - Admin Only' });
     done();
