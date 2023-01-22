@@ -14,3 +14,5 @@
 {"level":"error","message":"ERROR 501 \n ruta '/api/productos/' método 'POST' no implementada","timestamp":"2023-01-22T22:30:06.034Z"}
 {"level":"error","message":"ERROR 500 \n Cannot read properties of undefined (reading 'role')","timestamp":"2023-01-22T22:30:12.793Z"}
 {"level":"error","message":"ERROR 501 \n ruta '/api/productos/' método 'POST' no implementada","timestamp":"2023-01-22T22:30:20.613Z"}
+{"level":"error","message":"ERROR 500 \n E11000 duplicate key error collection: Entrega12.productos index: nombre_1 dup key: { nombre: \"compás\" }","timestamp":"2023-01-22T22:31:49.092Z"}
+{"level":"error","message":"ERROR 500 \n E11000 duplicate key error collection: Entrega12.productos index: codigo_1 dup key: { codigo: 11 }","timestamp":"2023-01-22T22:31:58.832Z"}
