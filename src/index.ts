@@ -17,7 +17,7 @@ const optionalArgsObject = {
   },
   default: {
     //Si no nos envian el argumento, se setea por default
-    port: process.env.$PORT || '8080',
+    port:  process.env.PORT || '8080',
     cluster: false,
   },
 };
