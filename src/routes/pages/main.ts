@@ -4,11 +4,11 @@ import createError from 'http-errors';
 import passport from 'passport';
 import { isLoggedInPage } from '../../middlewares/auth';
 import { logger } from '../../services/logger';
-import { Iproductos, productosModel } from '../../models/productos';
+import { productosModel } from '../../models/productos';
 
 const router = Router();
 
-const tableName = 'productos';
+//const tableName = 'productos';
 //const passportOptions = { failureRedirect: '/login' };
 
 //Login, logout y signup
@@ -24,7 +24,7 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/errorL
 
 router.post('/signUp',passport.authenticate('signup', { failureRedirect: '/errorSignUp'} ), (req: Request | any, res: Response, next: NextFunction) => {
     logger.info('POST /signUp');
-    res.render('login', { layout: 'layoutLogin' });
+    res.redirect('/');
 })
 
 router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
@@ -71,10 +71,6 @@ router.get('/', isLoggedInPage, async (req: Request | any, res: Response, next: 
         };
 
         if (!Array.isArray(datos.productos) || datos.productos.length === 0) datos.mostrar = false;
-
-        /* const wsServer = getWsServer();
-        console.log(wsServer);
-        wsServer.emit('message', datos); */
         res.render('carga_vista', datos);
     } catch (error) {
         next(error);

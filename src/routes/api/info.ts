@@ -6,7 +6,6 @@ const router = Router();
 
 router.get('/info', (req: Request, res: Response, next: NextFunction) => {
     logger.info('GET /info');
-    console.log('a');
     res.json({
         "Cantidad de CPUs:": os.cpus().length,
         "Argumentos de entrada: ": process.argv.slice(2),

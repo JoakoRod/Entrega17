@@ -2,6 +2,7 @@ import passport from 'passport';
 import { Request } from 'express';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { UserModel } from '../models/usuarios';
+import { logger } from '../services/logger';
 
 interface IStrategyOptionsWithRequest {
     usernameField?: string | undefined;
@@ -16,29 +17,15 @@ const strategyOptions: IStrategyOptionsWithRequest = {
     passReqToCallback: true,
 };
 
-/**
- * Recibimos el objeto request, el username y el password
- * Buscando que haya un match en nuestra DB
- * Si sale todo bien llamamos a done pasando null como primer argumento y como segundo argumento la info del usuario que encontramos en la DB
- * Si no hay match pasamos como segundo argumento false (eso indica que no encontramos un usuario con esa data).
- * Opcionalmente podemos mandar como tercer argumento un mensaje de error
- */
-
 const login = async (req: Request, username: string, password: string, done: Function) => {
-    const user: any = await UserModel.findOne({ username, password });
-
-    if (!user) {
+    const user: any = await UserModel.findOne({ username });
+    //si no encuentra el username o si su contrasena (encriptada) no es encontrada
+    if (!user || await user.isValidPassword(password) == false) {
         return done(null, false, { message: 'Invalid Username/Password' });
     }
     return done(null, user);
 };
 
-/**
- * Recibimos el objeto request, el username y el password
- * Recibimos del body la info del nuevo usuario
- * Verificamos que el username o email no este tomado, caso contrario devolvemos false en done indicando que hubo un error
- * Creamos el usuario nuevo y devolvemos el usuario creado a done
- */
 const signup = async (req: Request, username: string, password: string, done: Function) => {
     try {
         const { username, password, email } = req.body;
@@ -55,7 +42,7 @@ const signup = async (req: Request, username: string, password: string, done: Fu
         const user = await UserModel.findOne(query);
 
         if (user) {
-            console.log('User already exists');
+            logger.info('User already exists');
             return done(null, false, { message: 'User already exists' });
         } else {
             const userData = {

@@ -5,7 +5,7 @@ dotenv.config({
 });
 
 export default {
-    MONGO_ATLAS_URL: process.env.mongo_atlas || 'mongoSRV',
+    MONGO_ATLAS_URL: process.env.mongo_atlas || 'mongoSRV', //'mongodb+srv://admin:admin@coderhouse.dahey8p.mongodb.net/Entrega18?retryWrites=true&w=majority'
     /* SQL_CONNECTION: {
         client: 'mysql2',
         connection: {

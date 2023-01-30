@@ -16,31 +16,20 @@ exports.signUpFunc = exports.loginFunc = void 0;
 const passport_1 = __importDefault(require("passport"));
 const passport_local_1 = require("passport-local");
 const usuarios_1 = require("../models/usuarios");
+const logger_1 = require("../services/logger");
 const strategyOptions = {
     usernameField: 'username',
     passwordField: 'password',
     passReqToCallback: true,
 };
-/**
- * Recibimos el objeto request, el username y el password
- * Buscando que haya un match en nuestra DB
- * Si sale todo bien llamamos a done pasando null como primer argumento y como segundo argumento la info del usuario que encontramos en la DB
- * Si no hay match pasamos como segundo argumento false (eso indica que no encontramos un usuario con esa data).
- * Opcionalmente podemos mandar como tercer argumento un mensaje de error
- */
 const login = (req, username, password, done) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield usuarios_1.UserModel.findOne({ username, password });
-    if (!user) {
+    const user = yield usuarios_1.UserModel.findOne({ username });
+    //si no encuentra el username o si su contrasena (encriptada) no es encontrada
+    if (!user || (yield user.isValidPassword(password)) == false) {
         return done(null, false, { message: 'Invalid Username/Password' });
     }
     return done(null, user);
 });
-/**
- * Recibimos el objeto request, el username y el password
- * Recibimos del body la info del nuevo usuario
- * Verificamos que el username o email no este tomado, caso contrario devolvemos false en done indicando que hubo un error
- * Creamos el usuario nuevo y devolvemos el usuario creado a done
- */
 const signup = (req, username, password, done) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { username, password, email } = req.body;
@@ -53,7 +42,7 @@ const signup = (req, username, password, done) => __awaiter(void 0, void 0, void
         };
         const user = yield usuarios_1.UserModel.findOne(query);
         if (user) {
-            console.log('User already exists');
+            logger_1.logger.info('User already exists');
             return done(null, false, { message: 'User already exists' });
         }
         else {

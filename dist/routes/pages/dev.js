@@ -24,9 +24,6 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     };
     if (!Array.isArray(datos.productos) || datos.productos.length === 0)
         datos.mostrar = false;
-    /* const wsServer = getWsServer();
-    console.log(wsServer);
-    wsServer.emit('message', datos); */
     res.render('carga_vista_dev', datos);
 }));
 exports.default = router;

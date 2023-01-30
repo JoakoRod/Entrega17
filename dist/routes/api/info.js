@@ -10,7 +10,6 @@ const logger_1 = require("../../services/logger");
 const router = (0, express_1.Router)();
 router.get('/info', (req, res, next) => {
     logger_1.logger.info('GET /info');
-    console.log('a');
     res.json({
         "Cantidad de CPUs:": os_1.default.cpus().length,
         "Argumentos de entrada: ": process.argv.slice(2),

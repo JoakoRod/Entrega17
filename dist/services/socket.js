@@ -21,14 +21,14 @@ let io;
 function initWsServer(server) {
     io = new socket_io_1.Server(server);
     io.on('connection', (socket) => {
-        console.log('Nueva Conexion establecida!');
+        //console.log('Nueva Conexion establecida!');
         socket.on('seAgregoProducto', (producto) => __awaiter(this, void 0, void 0, function* () {
-            console.log('se carga un producto');
+            //console.log('se carga un producto');
             yield productos_1.productosModel.create(producto);
             socket.broadcast.emit('agregarProducto', (producto));
         }));
         socket.on('envioMSG', (data) => __awaiter(this, void 0, void 0, function* () {
-            console.log('llego un mensaje!');
+            //console.log('llego un mensaje!');
             //guardar mensaje
             (0, mensajes_1.save)(data);
             data.fecha = (0, moment_1.default)().format("DD/MM/YYYY HH:mm:ss");

@@ -20,7 +20,7 @@ const auth_1 = require("../../middlewares/auth");
 const logger_1 = require("../../services/logger");
 const productos_1 = require("../../models/productos");
 const router = (0, express_1.Router)();
-const tableName = 'productos';
+//const tableName = 'productos';
 //const passportOptions = { failureRedirect: '/login' };
 //Login, logout y signup
 router.get('/login', (req, res, next) => {
@@ -33,7 +33,7 @@ router.post('/login', passport_1.default.authenticate('login', { failureRedirect
 });
 router.post('/signUp', passport_1.default.authenticate('signup', { failureRedirect: '/errorSignUp' }), (req, res, next) => {
     logger_1.logger.info('POST /signUp');
-    res.render('login', { layout: 'layoutLogin' });
+    res.redirect('/');
 });
 router.get('/logout', (req, res, next) => {
     logger_1.logger.info('GET /logout');
@@ -81,9 +81,6 @@ router.get('/', auth_1.isLoggedInPage, (req, res, next) => __awaiter(void 0, voi
         };
         if (!Array.isArray(datos.productos) || datos.productos.length === 0)
             datos.mostrar = false;
-        /* const wsServer = getWsServer();
-        console.log(wsServer);
-        wsServer.emit('message', datos); */
         res.render('carga_vista', datos);
     }
     catch (error) {

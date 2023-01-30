@@ -46,10 +46,8 @@ if (cluster.isPrimary && args.cluster) {
   }
 
   cluster.on('exit', (worker, code) => {
-    console.log(`Worker ${worker.process.pid} died with code ${code} at ${Date()}`);
     cluster.fork();
   });
 } else {
-  console.log('salida normal');
   init();
 }

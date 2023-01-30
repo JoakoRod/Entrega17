@@ -10,16 +10,16 @@ export function initWsServer(server: http.Server) {
   io = new Server(server);
 
   io.on('connection', (socket) => {
-    console.log('Nueva Conexion establecida!');
+    //console.log('Nueva Conexion establecida!');
 
     socket.on('seAgregoProducto', async (producto) => {
-      console.log('se carga un producto');
+      //console.log('se carga un producto');
       await productosModel.create(producto);
       socket.broadcast.emit('agregarProducto', (producto));
     });
 
     socket.on('envioMSG', async (data) => {
-      console.log('llego un mensaje!');
+      //console.log('llego un mensaje!');
       //guardar mensaje
       save(data);
 
